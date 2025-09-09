@@ -129,6 +129,8 @@ function updateTotal() {
   totalElement.textContent = `Total: $${total}`;
 }
 
-
+// Initial Load
+loadCategories();
+loadPlants();
 
 
