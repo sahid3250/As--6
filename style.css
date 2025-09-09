@@ -1,0 +1,38 @@
+body { margin: 0; font-family: Arial, sans-serif; background: #f9fdf9; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #004d26; color: #fff; }
+.menu { display: flex; gap: 1rem; list-style: none; }
+.btn { background: #ffcc00; border: none; padding: 0.5rem 1rem; cursor: pointer; border-radius: 5px; }
+.plants h2{text-align: center;}
+.banner { text-align: center;font-weight: bolder; padding: 4rem;margin-bottom: 130px; background-color: rgb(148, 170, 170); color: white }
+ .banner::before {content: "";position: absolute;top: -115px;left: 0;width: 300px; height: 100%;background: url("hero-leaf1.png") no-repeat left center;background-size: contain;}
+  .banner::after {content: "";position: absolute;top: -115px;right: 0;width: 300px; height: 100%;background: url("hero-leaf2.png") no-repeat right center;background-size: contain;}
+
+
+.main-content { display: grid; grid-template-columns: 200px 1fr 200px; gap: 1rem; padding: 1rem; }
+ .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.card { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+ 
+.cart { background: #fff; padding: 1rem; border-radius: 8px; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.modal-content { background: #fff; padding: 2rem; border-radius: 8px; width: 400px; }
+.about {display: flex; gap: 10px;align-items: center; justify-content: center;}
+
+.about p { font-weight: bolder;}
+ .about img {height: 300px;width: 300px;}
+ .active{background-color: green;}
+.t { justify-items: center;}
+.i { justify-items: center; margin-top: 50px; padding-top: 50px; padding-bottom: 20px; font-size: x-large;background-color: rgb(133, 161, 152);}
+.impact .card{text-align: center; padding: auto; padding-left: 70px;padding-right: 70px;}
+.impact {display: flex;padding-top: -30px; justify-content: space-around; background-color: rgb(133, 161, 152);padding: 50px; }
+.form-section {justify-items: center; padding-top: 45px;padding-bottom: 45px;  background-color: #004d26;}
+.form-section h2 {color: #f9fdf9;}
+.form-section .btn{width: 175px;}
+.footer {justify-items: center; color: #f9fdf9;background-color: #319b66;padding-top: 5px;padding-bottom: 5px;}
+.hidden { display: none; }
+.spinner { text-align: center; margin: 20px; }
+@media (max-width: 768px) {
+  .main-content { grid-template-columns: 1fr; }
+  .navbar { flex-direction: column; }
+}
+
+

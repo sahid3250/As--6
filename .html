@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Green Earth — Plant a Tree</title>
+  <style>
+    :root{--green:#2f6b3e;--accent:#f6b93b;--muted:#f3f3f3;--card:#ffffff;--text:#1b1b1b}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:var(--text);background:var(--muted)}
+    /* NAVBAR */
+    .navbar{background:var(--green);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .brand .logo{width:28px;height:28px;border-radius:6px;background:#b7e4c7;display:inline-block}
+    nav{flex:1;text-align:center}
+    nav ul{list-style:none;margin:0;padding:0;display:inline-flex;gap:22px}
+    nav a{color:#fff;text-decoration:none}
+    .cta{background:var(--accent);padding:10px 16px;border-radius:22px;color:#111;font-weight:600}
+
+    /* HERO */
+    .hero{background-image:url('https://picsum.photos/1600/400?blur=2&seed=leaf');background-size:cover;background-position:center;padding:56px 24px;text-align:center;color:var(--green)}
+    .hero .box{max-width:900px;margin:0 auto;background:rgba(255,255,255,0.85);padding:34px;border-radius:8px}
+    .hero h1{margin:0;font-size:32px}
+    .hero p{margin:12px 0;color:#5b6b62}
+    .hero .center-btn{display:inline-block;margin-top:12px;padding:10px 18px;background:var(--accent);border-radius:20px;font-weight:600}
+
+    /* LAYOUT */
+    .container{max-width:1160px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:220px 1fr 300px;gap:18px}
+    /* Left categories */
+    .categories{background:var(--card);padding:14px;border-radius:8px;height:fit-content}
+    .category-btn{display:block;padding:10px;border-radius:6px;margin-bottom:8px;text-align:left;border:none;background:transparent;cursor:pointer}
+    .category-btn.active{background:var(--green);color:#fff}
+
+    /* Tree grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:var(--card);border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(3,3,3,0.06)}
+    .card img{width:100%;height:150px;object-fit:cover}
+    .card-body{padding:12px}
+    .card h3{margin:0;font-size:18px}
+    .meta{font-size:13px;color:#666;margin:8px 0}
+    .price-row{display:flex;justify-content:space-between;align-items:center}
+    .add-btn{background:var(--green);color:#fff;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+
+    /* Right cart */
+    .cart{background:var(--card);padding:16px;border-radius:10px;height:fit-content}
+    .cart h4{margin-top:0}
+    .cart-list{list-style:none;padding:0;margin:0}
+    .cart-list li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #eee}
+    .remove{background:transparent;border:none;color:#d9534f;cursor:pointer}
+    .total{font-weight:700;margin-top:10px}
+
+    /* About and impact */
+    .about{display:flex;gap:16px;align-items:center;padding:18px;background:var(--card);border-radius:10px}
+    .about img{width:320px;height:190px;object-fit:cover;border-radius:8px}
+    .impacts{display:flex;gap:12px;margin-top:16px}
+    .impact{flex:1;background:linear-gradient(180deg,#fff,#f7fff6);padding:12px;border-radius:8px;text-align:center}
+    .impact h3{margin:8px 0}
+
+    /* Plant section & footer */
+    .plant-form{padding:18px;background:var(--card);border-radius:10px}
+    .plant-form input, .plant-form button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ddd}
+    footer{margin-top:16px;padding:18px;text-align:center;color:#555}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{background:#fff;padding:18px;border-radius:10px;max-width:640px;width:100%}
+
+    /* Spinner */
+    .spinner{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);display:none}
+    .lds-ring{display:inline-block;position:relative;width:64px;height:64px}
+    .lds-ring div{box-sizing:border-box;display:block;position:absolute;width:51px;height:51px;margin:6px;border:6px solid #2f6b3e;border-radius:50%;animation:lds-ring 1.2s linear infinite;border-color:#2f6b3e transparent transparent transparent}
+    @keyframes lds-ring{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+    /* Responsive */
+    @media (max-width:1000px){.container{grid-template-columns:160px 1fr} .cart{display:none}}
+    @media (max-width:780px){.container{grid-template-columns:1fr} .grid{grid-template-columns:repeat(2,1fr)} .about{flex-direction:column} .hero h1{font-size:24px}}
+    @media (max-width:480px){.grid{grid-template-columns:1fr} nav ul{display:none} .cta{display:none}}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand"><span class="logo"></span>Green Earth</div>
+    <nav><ul id="menu"><li><a href="#">About</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#plant">Plant a Tree</a></li></ul></nav>
+    <a class="cta" href="#plant">Plant a Tree</a>
+  </header>
+
+  <section class="hero" aria-label="banner">
+    <div class="box">
+      <h1>Plant a Tree, Grow a Future</h1>
+      <p>Join our mission to plant 1 million trees and make the Earth greener for future generations.</p>
+      <a class="center-btn" href="#plant">Get Involved</a>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- left categories -->
+    <aside class="categories" id="categories">
+      <h4>Categories</h4>
+      <!-- buttons injected by JS -->
+    </aside>
+
+    <!-- center gallery -->
+    <section>
+      <h2 id="gallery">Our Trees</h2>
+      <div id="grid" class="grid"></div>
+
+      <section style="margin-top:18px">
+        <h2>About Campaign</h2>
+        <div class="about">
+          <img src="https://picsum.photos/640/360?seed=campaign" alt="campaign image">
+          <div>
+            <h3>Making Earth Greener</h3>
+            <p>We plant native trees in community areas, schools and farms — creating long-term ecological and economic benefits. Join us in this journey.</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top:18px">Our Impact</h2>
+        <div class="impacts">
+          <div class="impact"><div style="font-size:22px;font-weight:800" id="stat-trees">0</div><h3>Trees Planted</h3></div>
+          <div class="impact"><div style="font-size:22px;font-weight:800" id="stat-communities">0</div><h3>Communities Helped</h3></div>
+          <div class="impact"><div style="font-size:22px;font-weight:800" id="stat-volunteers">0</div><h3>Volunteers</h3></div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- right cart & form -->
+    <aside class="cart" id="cart-area">
+      <h4>Your Cart</h4>
+      <ul class="cart-list" id="cart-list"></ul>
+      <div class="total">Total: $<span id="total">0.00</span></div>
+
+      <div style="margin-top:18px" id="plant">
+        <h4>Plant a Tree Today</h4>
+        <form class="plant-form" id="plant-form">
+          <input type="text" id="pname" placeholder="Name" required>
+          <input type="email" id="pemail" placeholder="Email" required>
+          <input type="number" id="pqty" placeholder="Number of Trees" min="1" value="1" required>
+          <button type="submit">Donate / Plant</button>
+        </form>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Green Earth. All rights reserved.
+  </footer>
+
+  <!-- modal -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button id="close-modal" style="float:right">✕</button>
+      <h2 id="modal-title"></h2>
+      <img id="modal-img" src="" alt="" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin:8px 0">
+      <p id="modal-desc"></p>
+      <p><strong>Category: </strong><span id="modal-cat"></span></p>
+      <p><strong>Price: $</strong><span id="modal-price"></span></p>
+    </div>
+  </div>
+
+  <!-- spinner -->
+  <div class="spinner" id="spinner">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </div>
+
+  <script>
+    // Mock data (could be replaced by an actual fetch)
+    const categories = ['All','Fruit Tree','Flowering Tree','Shade Tree','Medicinal Tree','Timber Tree','Evergreen Tree'];
+
+    const trees = [
+      {id:1,name:'Mango Tree',category:'Fruit Tree',price:10,short:'A fast-growing tropical tree that produces sweet fruits.',img:'https://picsum.photos/seed/mango/600/400',desc:'Mango trees provide delicious fruits and shade. They are ideal for tropical climates.'},
+      {id:2,name:'Guava Tree',category:'Fruit Tree',price:8,short:'A hardy fruit tree that grows in various soils.',img:'https://picsum.photos/seed/guava/600/400',desc:'Guava trees produce nutritious fruits and are low maintenance.'},
+      {id:3,name:'Jackfruit Tree',category:'Fruit Tree',price:15,short:'A large tropical tree that bears the world\'s largest tree-borne fruit.',img:'https://picsum.photos/seed/jack/600/400',desc:'Jackfruit trees are substantial and provide abundant harvests.'},
+      {id:4,name:'Neem Tree',category:'Medicinal Tree',price:12,short:'Known for medicinal properties and pest resistance.',img:'https://picsum.photos/seed/neem/600/400',desc:'Neem is valued for its leaves and oil used in traditional remedies.'},
+      {id:5,name:'Teak Tree',category:'Timber Tree',price:25,short:'A valuable timber tree used in furniture.',img:'https://picsum.photos/seed/teak/600/400',desc:'Teak produces strong and durable wood, ideal for long-term projects.'},
+      {id:6,name:'Maple',category:'Shade Tree',price:18,short:'Popular shade tree with beautiful autumn colors.',img:'https://picsum.photos/seed/maple/600/400',desc:'Maple provides excellent shade and seasonal beauty.'},
+      {id:7,name:'Pine',category:'Evergreen Tree',price:14,short:'An evergreen ideal for windbreaks and timber.',img:'https://picsum.photos/seed/pine/600/400',desc:'Pine trees are coniferous and remain green year-round.'},
+      {id:8,name:'Cherry Blossom',category:'Flowering Tree',price:16,short:'Beautiful spring-flowering ornamental tree.',img:'https://picsum.photos/seed/cherry/600/400',desc:'Cherry blossoms are prized for their spectacular spring display.'}
+    ];
+
+    // State
+    let currentCategory = 'All';
+    let cart = [];
+
+    // Elements
+    const categoriesEl = document.getElementById('categories');
+    const gridEl = document.getElementById('grid');
+    const cartList = document.getElementById('cart-list');
+    const totalEl = document.getElementById('total');
+    const spinner = document.getElementById('spinner');
+    const modal = document.getElementById('modal');
+
+    // Helpers
+    function showSpinner(show=true){ spinner.style.display = show ? 'block' : 'none'; }
+
+    function renderCategories(){
+      const wrap = document.createElement('div');
+      categories.forEach(cat=>{
+        const btn = document.createElement('button');
+        btn.className='category-btn'+(cat===currentCategory? ' active':'');
+        btn.textContent = cat;
+        btn.onclick = ()=>{ setCategory(cat); };
+        wrap.appendChild(btn);
+      });
+      // clear previous and append
+      categoriesEl.querySelectorAll('.category-btn').forEach(n=>n.remove());
+      categoriesEl.appendChild(wrap);
+    }
+
+    function setCategory(cat){
+      currentCategory=cat;
+      // highlight
+      document.querySelectorAll('.category-btn').forEach(b=>b.classList.toggle('active', b.textContent===cat));
+      loadTrees();
+    }
+
+    function createCard(item){
+      const c=document.createElement('article');c.className='card';
+      c.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="card-body">
+          <h3 class="tree-name" data-id="${item.id}" style="cursor:pointer;color:var(--green);text-decoration:underline">${item.name}</h3>
+          <div class="meta">${item.short}</div>
+          <div class="price-row">
+            <div>
+              <small>${item.category}</small>
+            </div>
+            <div>
+              <strong>$${item.price.toFixed(2)}</strong>
+              <button class="add-btn" data-id="${item.id}">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `;
+      // modal open
+      c.querySelector('.tree-name').addEventListener('click',()=>openModal(item));
+      // add to cart
+      c.querySelector('.add-btn').addEventListener('click',()=>addToCart(item));
+      return c;
+    }
+
+    function loadTrees(){
+      // show spinner while "loading"
+      showSpinner(true);
+      gridEl.innerHTML='';
+      setTimeout(()=>{
+        let list = trees.slice();
+        if(currentCategory && currentCategory!=='All') list = list.filter(t=>t.category===currentCategory);
+        list.forEach(t=> gridEl.appendChild(createCard(t)));
+        showSpinner(false);
+      },400); // emulate network
+    }
+
+    // Modal functions
+    function openModal(item){
+      document.getElementById('modal-title').textContent = item.name;
+      document.getElementById('modal-img').src = item.img;
+      document.getElementById('modal-desc').textContent = item.desc;
+      document.getElementById('modal-cat').textContent = item.category;
+      document.getElementById('modal-price').textContent = item.price.toFixed(2);
+      modal.style.display='flex';
+    }
+    document.getElementById('close-modal').addEventListener('click',()=>modal.style.display='none');
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'});
+
+    // Cart functions
+    function addToCart(item){
+      cart.push(Object.assign({},item));
+      updateCartUI();
+      alert(`${item.name} added to cart`);
+    }
+    function removeFromCart(index){
+      cart.splice(index,1);
+      updateCartUI();
+    }
+    function updateCartUI(){
+      cartList.innerHTML='';
+      cart.forEach((it,i)=>{
+        const li=document.createElement('li');
+        li.innerHTML = `<span>${it.name} x1</span><span>$${it.price.toFixed(2)} <button class=remove data-i=${i}>❌</button></span>`;
+        cartList.appendChild(li);
+      });
+      // hook remove
+      cartList.querySelectorAll('.remove').forEach(btn=>btn.addEventListener('click',e=>{
+        const idx=+e.target.dataset.i; removeFromCart(idx);
+      }));
+      const total = cart.reduce((s,it)=>s+it.price,0);
+      totalEl.textContent = total.toFixed(2);
+    }
+
+    // Plant form
+    document.getElementById('plant-form').addEventListener('submit',e=>{
+      e.preventDefault();
+      const name=document.getElementById('pname').value.trim();
+      const email=document.getElementById('pemail').value.trim();
+      const qty=Number(document.getElementById('pqty').value);
+      if(!name||!email||qty<1) return alert('Please fill the form correctly');
+      alert(`Thanks ${name}! Your donation to plant ${qty} tree(s) is received (mock).`);
+      e.target.reset();
+    });
+
+    // small animations for stats
+    function animateStat(id,val){
+      const el=document.getElementById(id); let cur=0; const step=Math.max(1,Math.floor(val/40));
+      const iv=setInterval(()=>{cur+=step;if(cur>=val){cur=val;clearInterval(iv);}el.textContent=cur;},12);
+    }
+
+    // init
+    (function init(){
+      document.getElementById('year').textContent = new Date().getFullYear();
+      // render categories and trees with loading spinner
+      renderCategories();
+      setCategory('All');
+      // fake impact numbers
+      animateStat('stat-trees', 12845);
+      animateStat('stat-communities', 78);
+      animateStat('stat-volunteers', 342);
+    })();
+  </script>
+</body>
+</html>
