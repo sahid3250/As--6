@@ -7,7 +7,6 @@ body { margin: 0; font-family: Arial, sans-serif; background: #f9fdf9; }
  .banner::before {content: "";position: absolute;top: -115px;left: 0;width: 300px; height: 100%;background: url("hero-leaf1.png") no-repeat left center;background-size: contain;}
   .banner::after {content: "";position: absolute;top: -115px;right: 0;width: 300px; height: 100%;background: url("hero-leaf2.png") no-repeat right center;background-size: contain;}
 
-
 .main-content { display: grid; grid-template-columns: 200px 1fr 200px; gap: 1rem; padding: 1rem; }
  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
 .card { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -34,5 +33,6 @@ body { margin: 0; font-family: Arial, sans-serif; background: #f9fdf9; }
   .main-content { grid-template-columns: 1fr; }
   .navbar { flex-direction: column; }
 }
+
 
 
