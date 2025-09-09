@@ -101,7 +101,6 @@ function addToCart(name, price, btn) {
 }
 
 
-
   const categoriesList = document.getElementById("categories");
     const plantsContainer = document.getElementById("plants");
 
@@ -118,7 +117,6 @@ function addToCart(name, price, btn) {
     //   });
 
 
-
 // Remove from Cart
 function removeFromCart(btn, price) {
   btn.parentElement.remove();
@@ -132,6 +130,5 @@ function updateTotal() {
 }
 
 
-// Initial Load
-loadCategories();
-loadPlants();
+
+
